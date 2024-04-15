@@ -1,0 +1,4 @@
+#ifndef MR2RDAC_PRIVATE_H_
+#define MR2RDAC_PRIVATE_H_
+
+#endif /* MR2RDAC_PRIVATE_H_ */

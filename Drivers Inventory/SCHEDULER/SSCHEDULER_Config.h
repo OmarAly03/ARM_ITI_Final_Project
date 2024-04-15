@@ -1,0 +1,4 @@
+#ifndef MSCHEDULER_CONFIG_H_
+#define MSCHEDULER_CONFIG_H_
+
+#endif /* MSCHEDULER_CONFIG_H_ */
