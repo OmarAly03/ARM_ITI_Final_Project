@@ -155,12 +155,3 @@ void EXTI1_IRQHandler(void){
 void EXTI2_IRQHandler(void){
 	Handler2();
 }
-
-//		MSTK_voidDelayms(5000);
-//		LCD_voidClearScreen();
-//		LCD_voidSetPosition(LCD_ROW0,LCD_COLUMN0);
-//		LCD_voidSendString((const u8*)"Omar Tarek");
-//		MSTK_voidDelayms(100);
-//
-//		LCD_voidSetPosition(LCD_ROW1,LCD_COLUMN0);
-//		LCD_voidSendString((const u8*)"ARM LCD Project");
