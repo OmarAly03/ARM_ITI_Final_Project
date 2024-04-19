@@ -1,22 +1,25 @@
 /*
- * HLEDMATRIX_Interface.h
+ * HLED_MATRIX_Interface.h
  *
  *  Created on: Feb 18, 2024
- *      Author: Omar
+ *      Author:Omar, Mariam & Anwar
  */
 
-#ifndef HLEDMATRIX_INTERFACE_H_
-#define HLEDMATRIX_INTERFACE_H_
+#ifndef HLED_MATRIX_INTERFACE_H_
+#define HLED_MATRIX_INTERFACE_H_
 
 #include <LIB/STD_Types.h>
 
-/*********************** Functions Prototypes ******************************/
-void HLEDMATRIX_voidInit(void);
-void HLEDMATRIX_voidDisableColumns(void);
-void HLEDMATRIX_voidSetRowValue(u8 copy_u8RowValue);
-void HLEDMATRIX_voidDisplay(u8 *copy_u8Array);
+#define NUM_OF_COLS		8
+
+void HLED_MATRIX_void_Init(void);
+void HLED_MATRIX_void_DisableColumns(void);
+void HLED_MATRIX_void_SetRowValue(u8 copyu8_RowValue);
+void HLED_MATRIX_void_DisplayChar(u8 *ptru8_arr);
+void HLED_MATRIX_void_DisplayString(u8 *ptru8_arr, u8 localu8_ArrSize) ;
+
+
+#endif /* HLED_MATRIX_INTERFACE_H_ */
 
 
 
-
-#endif /* HLEDMATRIX_INTERFACE_H_ */
