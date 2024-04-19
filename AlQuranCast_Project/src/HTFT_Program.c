@@ -1,21 +1,17 @@
-/*
- * HTFT_Program.c
- *
- *  Created on: Sep 24, 2023
- *      Author: Ibrahim Refaey
- */
+/******************* LIB **********************/
+#include <LIB/BIT_MATH.h>
+#include <LIB/STD_Types.h>
 
+/****************** MCAL **********************/
+#include <MCAL/EXTI/MEXTI_Interface.h>
+#include <MCAL/GPIO/MGPIO_Interface.h>
+#include <MCAL/RCC/MRCC_Interface.h>
+#include <MCAL/STK/MSTK_Interface.h>
 
-#include "../include/LIB/BIT_MATH.h"
-#include "../include/LIB/STD_Types.h"
-#include "../include/MRCC/MRCC_Interface.h"
-#include "../include/MSTK/MSTK_Interface.h"
-#include "../include/MGPIO/MGPIO_Interface.h"
-#include "../include/MSPI/MSPI_Interface.h"
-
-#include "../include/HTFT/HTFT_Interface.h"
-#include "../include/HTFT/HTFT_private.h"
-#include "../include/HTFT/HTFT_Config.h"
+/****************** HAL **********************/
+#include <HAL/TFT/HTFT_Config.h>
+#include <HAL/TFT/HTFT_Private.h>
+#include <HAL/TFT/HTFT_Interface.h>
 //#include "../include/HTFT/TFT_Monir.h"
 
 

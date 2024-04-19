@@ -171,6 +171,27 @@ void MGPIO_voidSetPinValue(u8 copyu8Port, u8 copyu8Pin, u8 copyu8Output){
 	}
 }
 
+void MGPIO_voidSetPortValue(u8 copyu8Port, u8 copyu8Value, u8 copyu8StartPin)
+{
+	switch(copyu8Port)
+	{
+	case GPIO_PORTA:
+		GPIOA->ODR = (copyu8Value << copyu8StartPin);
+		break;
+
+	case GPIO_PORTB:
+		GPIOA->ODR = (copyu8Value << copyu8StartPin);
+		break;
+
+	case GPIO_PORTC:
+		GPIOA->ODR = (copyu8Value << copyu8StartPin);
+		break;
+
+	default:
+		break;
+	}
+}
+
 void MGPIO_voidGetPinValue(u8 copyu8Port, u8 copyu8Pin, u8 *pu8Return){
 	if((copyu8Port == GPIO_PORTA) && ((copyu8Port == GPIO_PIN13) || (copyu8Port == GPIO_PIN14) || (copyu8Port == GPIO_PIN15))){
 		/* Do Nothing */

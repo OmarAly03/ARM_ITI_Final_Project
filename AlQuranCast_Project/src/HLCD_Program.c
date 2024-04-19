@@ -1,25 +1,15 @@
-/*
- * HLCD_Program.c
- *
- *  Created on: Mar 19, 2024
- *      Author: Ibrahim
- */
-
-
-/****************************LIB***************************/
-#include "../../include/LIB/BIT_MATH.h"
-#include "../../include/LIB/STD_Types.h"
+/******************* LIB **********************/
+#include <LIB/BIT_MATH.h>
+#include <LIB/STD_Types.h>
 
 /****************************MCAL**************************/
-#include "../include/MGPIO/MGPIO_Interface.h"
-#include "../include/MSTK/MSTK_Interface.h"
+#include <MCAL/GPIO/MGPIO_Interface.h>
+#include <MCAL/STK/MSTK_Interface.h>
 
 /****************************HAL***************************/
-#include "../include/HLCD/HLCD_Config.h"
-#include "../include/HLCD/HLCD_Interface.h"
-#include "../include/HLCD/HLCD_Private.h"
-
-
+#include <HAL/LCD/HLCD_Interface.h>
+#include <HAL/LCD/HLCD_Private.h>
+#include <HAL/LCD/HLCD_Config.h>
 
 
 /********************Functions Definitions*****************/
@@ -109,11 +99,11 @@ void LCD_voidSendCommand(u8 copy_u8Command)
 #if LCD_MODE == LCD_EIGHT_BIT
 
 	/*Set port with the command*/
-	MGPIO_voidSetPortValue(LCD_DATA_PORT,copy_u8Command);
+	MGPIO_voidSetPortValue(LCD_DATA_PORT,copy_u8Command, STARTPIN);
 
 #elif LCD_MODE == LCD_FOUR_BIT
 	/*Set port with the command*/
-	MGPIO_voidSetPortValue(LCD_DATA_PORT,(copy_u8Command&0xFFFFFFF0));
+	MGPIO_voidSetPortValue(LCD_DATA_PORT,(copy_u8Command&0xFFFFFFF0), STARTPIN);
 
 	/*set the EN pin to high: 1 to read, waiting 2 msec and then make it low again*/
 	MGPIO_voidSetPinValue(LCD_CTRL_EN_PORT,LCD_EN_PIN,GPIO_PIN_HIGH);
@@ -123,7 +113,7 @@ void LCD_voidSendCommand(u8 copy_u8Command)
 
 	MGPIO_voidSetPinValue(LCD_CTRL_EN_PORT,LCD_EN_PIN,GPIO_PIN_LOW);
 
-	MGPIO_voidSetPortValue(LCD_DATA_PORT,((copy_u8Command<<4)&0xFFFFFFF0));
+	MGPIO_voidSetPortValue(LCD_DATA_PORT,((copy_u8Command<<4)&0xFFFFFFF0), STARTPIN);
 
 
 #else
@@ -152,12 +142,12 @@ void LCD_voidSendData(u8 copy_u8Data)
 
 #if LCD_MODE == LCD_EIGHT_BIT
 
-	MGPIO_voidSetPortValue(LCD_DATA_PORT,copy_u8Data);
+	MGPIO_voidSetPortValue(LCD_DATA_PORT,copy_u8Data, STARTPIN);
 
 
 #elif LCD_MODE == LCD_FOUR_BIT
 	/*Set port with data*/
-	MGPIO_voidSetPortValue(LCD_DATA_PORT,(copy_u8Data&0xFFFFFFF0));
+	MGPIO_voidSetPortValue(LCD_DATA_PORT,(copy_u8Data&0xFFFFFFF0), STARTPIN);
 
 	/*set the EN pin to high: 1 to read, waiting 2 msec and then make it low again*/
 	MGPIO_voidSetPinValue(LCD_CTRL_EN_PORT,LCD_EN_PIN,GPIO_PIN_HIGH);
@@ -167,7 +157,7 @@ void LCD_voidSendData(u8 copy_u8Data)
 
 	MGPIO_voidSetPinValue(LCD_CTRL_EN_PORT,LCD_EN_PIN,GPIO_PIN_LOW);
 
-	MGPIO_voidSetPortValue(LCD_DATA_PORT,((copy_u8Data<<4)&0xFFFFFFF0));
+	MGPIO_voidSetPortValue(LCD_DATA_PORT,((copy_u8Data<<4)&0xFFFFFFF0), STARTPIN);
 
 
 #else

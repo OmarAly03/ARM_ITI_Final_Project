@@ -34,6 +34,12 @@ MEXTI_Configurations MEXTI_Config [MEXTI_NUMBER] =
 				MEXTI_PORTB,
 				MEXTI_FALLING_EDGE,
 				MEXTI_ENABLED
+		},
+		{
+				MEXTI_LINE2,
+				MEXTI_PORTB,
+				MEXTI_FALLING_EDGE,
+				MEXTI_ENABLED
 		}
 
 };

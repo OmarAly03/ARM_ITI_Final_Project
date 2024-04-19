@@ -1,15 +1,17 @@
-/*
- * MSPI_Program.c
- *
- *  Created on: Sep 20, 2023
- *      Author: Ibrahim Refaey
- */
+/******************* LIB **********************/
+#include <LIB/BIT_MATH.h>
+#include <LIB/STD_Types.h>
 
-#include "../include/LIB/BIT_MATH.h"
-#include "../include/LIB/STD_Types.h"
-#include "../include/MSPI/MSPI_Interface.h"
-#include "../include/MSPI/MSPI_private.h"
-#include "../include/MSPI/MSPI_Config.h"
+/****************** MCAL **********************/
+#include <MCAL/EXTI/MEXTI_Interface.h>
+#include <MCAL/GPIO/MGPIO_Interface.h>
+#include <MCAL/RCC/MRCC_Interface.h>
+#include <MCAL/STK/MSTK_Interface.h>
+
+/****************** HAL **********************/
+#include <MCAL/SPI/MSPI_Config.h>
+#include <MCAL/SPI/MSPI_Interface.h>
+#include <MCAL/SPI/MSPI_Private.h>
 
 PtrToFunc_void SPI_CallBack[SPI_NUMBER];
 
