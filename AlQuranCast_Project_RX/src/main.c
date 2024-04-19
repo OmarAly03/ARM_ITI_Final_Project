@@ -18,6 +18,14 @@
 
 void handler_USART(void);
 u8 Global_u8RX ;
+u8 LED_str1[] = "1 MOHAMED SEDDIK EL MENSHAWY";
+u8 LED_str2[] = "2 MAHMOUD KHALIL EL HUSSARY";
+u8 LED_str3[] = "3 ABDELBASET ABDELSAMAD";
+
+u8 ArrSize1 = sizeof(LED_str1) / sizeof(u8);
+u8 ArrSize2 = sizeof(LED_str2) / sizeof(u8);
+u8 ArrSize3 = sizeof(LED_str3) / sizeof(u8);
+
 
 int main(void){
 	MRCC_voidInit();
@@ -25,6 +33,8 @@ int main(void){
 
 	MRCC_voidEnablePeripheral(RCC_AHB1,RCC_AHB1_GPIOA);
 	MRCC_voidEnablePeripheral(RCC_APB2,RCC_APB2_USART1);
+    
+	HLED_MATRIX_void_Init();
 
 	MGPIO_voidSetPinMode(GPIO_PORTA, GPIO_PIN0, GPIO_OUTPUT);
 	MGPIO_voidSetPinMode(GPIO_PORTA, GPIO_PIN1, GPIO_OUTPUT);
@@ -54,12 +64,17 @@ void handler_USART(void){
 	MUSART_voidReceive(MUSART_USART1 ,&Global_u8RX);
 	if(Global_u8RX == '1'){
 		MGPIO_voidSetPinValue(GPIO_PORTA, GPIO_PIN0, GPIO_PIN_HIGH);
+		HLED_MATRIX_void_DisplayString(LED_str1, ArrSize1);
+
 	}
 	else if(Global_u8RX == '2'){
 		MGPIO_voidSetPinValue(GPIO_PORTA, GPIO_PIN1, GPIO_PIN_HIGH);
+        HLED_MATRIX_void_DisplayString(LED_str2, ArrSize2);
+
 	}
 	else if(Global_u8RX == '3'){
 		MGPIO_voidSetPinValue(GPIO_PORTA, GPIO_PIN2, GPIO_PIN_HIGH);
+		HLED_MATRIX_void_DisplayString(LED_str3, ArrSize3);
 	}
 	else{
 		MGPIO_voidSetPinValue(GPIO_PORTA, GPIO_PIN0, GPIO_PIN_LOW);
