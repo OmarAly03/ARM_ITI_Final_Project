@@ -1,101 +1,96 @@
-/******************* LIB **********************/
-#include <LIB/BIT_MATH.h>
-#include <LIB/STD_Types.h>
+/*
+ * MSPI_Program.c
+ *
+ *  Created on: Sep 20, 2023
+ *      Author: Ibrahim Refaey
+ */
 
-/****************** MCAL **********************/
-#include <MCAL/EXTI/MEXTI_Interface.h>
-#include <MCAL/GPIO/MGPIO_Interface.h>
-#include <MCAL/RCC/MRCC_Interface.h>
-#include <MCAL/STK/MSTK_Interface.h>
-
-/****************** HAL **********************/
-#include <MCAL/SPI/MSPI_Config.h>
-#include <MCAL/SPI/MSPI_Interface.h>
-#include <MCAL/SPI/MSPI_Private.h>
+#include "../include/LIB/BIT_MATH.h"
+#include "../include/LIB/STD_Types.h"
+#include "../include/MCAL/SPI/MSPI_Interface.h"
+#include "../include/MCAL/SPI/MSPI_private.h"
+#include "../include/MCAL/SPI/MSPI_Config.h"
 
 PtrToFunc_void SPI_CallBack[SPI_NUMBER];
 
 void MSPI_voidInit (void)
 {
 	/*Set Data Size*/
-#if MSPI1_DATA_SIZE == MSPI_16BIT_DATA
-	SET_BIT (SPI1->CR1 , CR1_DFF);
+#if MSPI2_DATA_SIZE == MSPI_16BIT_DATA
+	SET_BIT (SPI2->CR1 , CR1_DFF);
 #else
-	CLR_BIT (SPI1->CR1 , CR1_DFF);
+	CLR_BIT (SPI2->CR1 , CR1_DFF);
 #endif
 	/*Set slave management mode*/
-#if MSPI1_SS_MANAGE == MSPI_SW_SLAVE_MANAGEMENT
-	SET_BIT (SPI1->CR1 , CR1_SSM);
-	SET_BIT(SPI1->CR1 , CR1_SSI);
+#if MSPI2_SS_MANAGE == MSPI_SW_SLAVE_MANAGEMENT
+	SET_BIT (SPI2->CR1 , CR1_SSM);
+	SET_BIT(SPI2->CR1 , CR1_SSI);
 #else
 	CLR_BIT (SPI1->CR1 , CR1_SSM);
 #endif
 	/*Set Data Order*/
-#if MSPI1_DATA_ORDER == MSPI_LSB_FIRST
-	SET_BIT (SPI1->CR1 , CR1_LSBFIRST);
+#if MSPI2_DATA_ORDER == MSPI_LSB_FIRST
+	SET_BIT (SPI2->CR1 , CR1_LSBFIRST);
 #else
-	CLR_BIT (SPI1->CR1 , CR1_LSBFIRST);
+	CLR_BIT (SPI2->CR1 , CR1_LSBFIRST);
 #endif
 	/*Set Clock Mode*/
-	SPI1->CR1 &= ~(TWO_BIT_MASK<<CR1_CLK_SELECT);
-	SPI1->CR1 |= (MSPI1_CLK_MODE<<CR1_CLK_SELECT);
+	SPI2->CR1 &= ~(TWO_BIT_MASK<<CR1_CLK_SELECT);
+	SPI2->CR1 |= (MSPI2_CLK_MODE<<CR1_CLK_SELECT);
 	/*Set Interrupt States*/
-#if MSPI1_TX_INTERRUPT_STATE == MSPI_INTERRUPT_ENABLE
-	SET_BIT (SPI1->CR2 , CR2_TXEIE);
+#if MSPI2_TX_INTERRUPT_STATE == MSPI_INTERRUPT_ENABLE
+	SET_BIT (SPI2->CR2 , CR2_TXEIE);
 #else
-	CLR_BIT (SPI1->CR2 , CR2_TXEIE);
+	CLR_BIT (SPI2->CR2 , CR2_TXEIE);
 #endif
-#if MSPI1_RX_INTERRUPT_STATE == MSPI_INTERRUPT_ENABLE
-	SET_BIT (SPI1->CR2 , CR2_RXNEIE);
+#if MSPI2_RX_INTERRUPT_STATE == MSPI_INTERRUPT_ENABLE
+	SET_BIT (SPI2->CR2 , CR2_RXNEIE);
 #else
-	CLR_BIT (SPI1->CR2 , CR2_RXNEIE);
+	CLR_BIT (SPI2->CR2 , CR2_RXNEIE);
 #endif
 	/*Set SPI Mode*/
-#if MSPI1_MASTER_SLAVE == MSPI_MASTER
-	SET_BIT (SPI1->CR1 , CR1_MSTR);
+#if MSPI2_MASTER_SLAVE == MSPI_MASTER
+	SET_BIT (SPI2->CR1 , CR1_MSTR);
 	/*Set Prescaler*/
-	SPI1->CR1 &= ~(THREE_BIT_MASK<<CR1_BR);
-	SPI1->CR1 |= (MSPI1_PRESCALER<<CR1_BR);
+	SPI2->CR1 &= ~(THREE_BIT_MASK<<CR1_BR);
+	SPI2->CR1 |= (MSPI2_PRESCALER<<CR1_BR);
 #else
-	CLR_BIT (SPI1->CR1 , CR1_MSTR);
+	CLR_BIT (SPI2->CR1 , CR1_MSTR);
 #endif
 	/*SPI State*/
-#if MSPI1_STATE == MSPI_ENABLED
-	SET_BIT (SPI1->CR1 , CR1_SPE);
+#if MSPI2_STATE == MSPI_ENABLED
+	SET_BIT (SPI2->CR1 , CR1_SPE);
 #else
-	CLR_BIT (SPI1->CR1 , CR1_SPE);
+	CLR_BIT (SPI2->CR1 , CR2_SPE);
 #endif
 
-
-	//SPI1->CR1 = 0x0347;
 }
 
 u16 MSPI_voidSendReceiveData (u16 A_u16Data)
 {
 	/*Put data in SPI Data Register*/
-#if MSPI1_DATA_SIZE == MSPI_16BIT_DATA
-	SPI1->DR = A_u16Data;
+#if MSPI2_DATA_SIZE == MSPI_16BIT_DATA
+	SPI2->DR = A_u16Data;
 #else
-	SPI1->DR = (u8) A_u16Data;
+	SPI2->DR = (u8) A_u16Data;
 #endif
 	/*wait until SPI finishes*/
-	while (GET_BIT(SPI1->SR , SR_BSY) == SPI_BUSY);
-	return (u8)SPI1->DR;
+	while (GET_BIT(SPI2->SR , SR_BSY) == SPI_BUSY);
+	return (u8)SPI2->DR;
 }
 
 void MSPI_voidSetCallBack (PtrToFunc_void p_CallBackFunc)
 {
 	/*Set Call Back Function*/
-	SPI_CallBack[0] = p_CallBackFunc;
+	SPI_CallBack[1] = p_CallBackFunc;
 }
 
 
-void SPI1_IRQHandler (void)
+void SPI2_IRQHandler (void)
 {
-	if (SPI_CallBack[0] != NULL)
+	if (SPI_CallBack[1] != NULL)
 	{
-		SPI_CallBack[0]();
+		SPI_CallBack[1]();
 	}
 }
-
 

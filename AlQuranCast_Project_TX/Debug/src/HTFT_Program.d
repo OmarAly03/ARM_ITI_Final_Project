@@ -1,27 +1,27 @@
-src/HTFT_Program.o: ../src/HTFT_Program.c ../include/LIB/BIT_MATH.h \
- ../include/LIB/STD_Types.h ../include/MCAL/EXTI/MEXTI_Interface.h \
- ../include/MCAL/EXTI/MEXTI_Private.h \
- ../include/MCAL/GPIO/MGPIO_Interface.h \
- ../include/MCAL/RCC/MRCC_Interface.h \
- ../include/MCAL/STK/MSTK_Interface.h ../include/HAL/TFT/HTFT_Config.h \
- ../include/HAL/TFT/HTFT_Private.h ../include/HAL/TFT/HTFT_Interface.h
+src/HTFT_Program.o: ../src/HTFT_Program.c \
+ ../src/../include/LIB/BIT_MATH.h ../src/../include/LIB/STD_Types.h \
+ ../src/../include/MCAL/RCC/MRCC_Interface.h \
+ ../src/../include/MCAL/STK/MSTK_Interface.h \
+ ../src/../include/MCAL/GPIO/MGPIO_Interface.h \
+ ../src/../include/MCAL/SPI/MSPI_Interface.h \
+ ../src/../include/HAL/TFT/HTFT_Interface.h \
+ ../src/../include/HAL/TFT/HTFT_private.h \
+ ../src/../include/HAL/TFT/HTFT_Config.h
 
-../include/LIB/BIT_MATH.h:
+../src/../include/LIB/BIT_MATH.h:
 
-../include/LIB/STD_Types.h:
+../src/../include/LIB/STD_Types.h:
 
-../include/MCAL/EXTI/MEXTI_Interface.h:
+../src/../include/MCAL/RCC/MRCC_Interface.h:
 
-../include/MCAL/EXTI/MEXTI_Private.h:
+../src/../include/MCAL/STK/MSTK_Interface.h:
 
-../include/MCAL/GPIO/MGPIO_Interface.h:
+../src/../include/MCAL/GPIO/MGPIO_Interface.h:
 
-../include/MCAL/RCC/MRCC_Interface.h:
+../src/../include/MCAL/SPI/MSPI_Interface.h:
 
-../include/MCAL/STK/MSTK_Interface.h:
+../src/../include/HAL/TFT/HTFT_Interface.h:
 
-../include/HAL/TFT/HTFT_Config.h:
+../src/../include/HAL/TFT/HTFT_private.h:
 
-../include/HAL/TFT/HTFT_Private.h:
-
-../include/HAL/TFT/HTFT_Interface.h:
+../src/../include/HAL/TFT/HTFT_Config.h:

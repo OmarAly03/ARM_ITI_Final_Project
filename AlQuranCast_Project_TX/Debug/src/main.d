@@ -9,7 +9,7 @@ src/main.o: ../src/main.c ../include/LIB/BIT_MATH.h \
  ../include/MCAL/USART/MUSART_Interface.h \
  ../include/HAL/LCD/HLCD_Interface.h \
  ../include/HAL/LEDMATRIX/HLEDMATRIX_Interface.h \
- ../include/HAL/TFT/HTFT_Interface.h
+ ../include/HAL/TFT/HTFT_Interface.h ../include/HAL/TFT/TFT_arrays.h
 
 ../include/LIB/BIT_MATH.h:
 
@@ -36,3 +36,5 @@ src/main.o: ../src/main.c ../include/LIB/BIT_MATH.h \
 ../include/HAL/LEDMATRIX/HLEDMATRIX_Interface.h:
 
 ../include/HAL/TFT/HTFT_Interface.h:
+
+../include/HAL/TFT/TFT_arrays.h:

@@ -1,18 +1,22 @@
-/******************* LIB **********************/
-#include <LIB/BIT_MATH.h>
-#include <LIB/STD_Types.h>
+/*
+ * HTFT_Program.c
+ *
+ *  Created on: Sep 24, 2023
+ *      Author: Ibrahim Refaey
+ */
 
-/****************** MCAL **********************/
-#include <MCAL/EXTI/MEXTI_Interface.h>
-#include <MCAL/GPIO/MGPIO_Interface.h>
-#include <MCAL/RCC/MRCC_Interface.h>
-#include <MCAL/STK/MSTK_Interface.h>
 
-/****************** HAL **********************/
-#include <HAL/TFT/HTFT_Config.h>
-#include <HAL/TFT/HTFT_Private.h>
-#include <HAL/TFT/HTFT_Interface.h>
-//#include "../include/HTFT/TFT_Monir.h"
+#include "../include/LIB/BIT_MATH.h"
+#include "../include/LIB/STD_Types.h"
+#include "../include/MCAL/RCC/MRCC_Interface.h"
+#include "../include/MCAL/STK/MSTK_Interface.h"
+#include "../include/MCAL/GPIO/MGPIO_Interface.h"
+#include "../include/MCAL/SPI/MSPI_Interface.h"
+
+#include "../include/HAL/TFT/HTFT_Interface.h"
+#include "../include/HAL/TFT/HTFT_private.h"
+#include "../include/HAL/TFT/HTFT_Config.h"
+
 
 
 void HTFT_voidReset (void)
@@ -36,23 +40,27 @@ void HTFT_voidReset (void)
 
 
 	/*Send command sleep out*/
-	HTFT_voidSendCommand(0x11);
+	HTFT_voidSendCommand(SLEEP_OUT);
 
 	/*wait 150 msec*/
 	MSTK_voidDelayms(150);
 
 	/*color mode command*/
-	HTFT_voidSendCommand(0x3A);
+	HTFT_voidSendCommand(MODE_SET_COLOR);
 	/*RGB565*/
-	HTFT_voidSendData(0x05);
+	HTFT_voidSendData(TFT_RGB565);
 
 	/*Display command*/
-	HTFT_voidSendCommand(0x29);
+	HTFT_voidSendCommand(DISPLAY_ON);
 
 }
 
 void HTFT_voidInit (void)
 {
+	MSTK_voidInit();
+	//MSTK_voidDisableInterrupt();
+	MSPI_voidInit();
+
 	MGPIO_voidSetPinMode(TFT_RESET_PORT , TFT_RESET_PIN , GPIO_OUTPUT);
 	MGPIO_voidSetPinOutputMode(TFT_RESET_PORT , TFT_RESET_PIN , GPIO_PUSH_PULL , GPIO_MEDIUM_SPEED);
 	MGPIO_voidSetResetPin(TFT_RESET_PORT , TFT_RESET_PIN , GPIO_RESET);
@@ -61,16 +69,16 @@ void HTFT_voidInit (void)
 	MGPIO_voidSetResetPin(TFT_CS_PORT , TFT_CS_PIN , GPIO_RESET);
 	MGPIO_voidSetPinMode(TFT_CONTROL_PORT , TFT_CONTROL_PIN , GPIO_OUTPUT);
 	MGPIO_voidSetPinOutputMode(TFT_CONTROL_PORT , TFT_CONTROL_PIN , GPIO_PUSH_PULL , GPIO_MEDIUM_SPEED);
-	MGPIO_voidSetPinMode(GPIO_PORTA , GPIO_PIN5 , GPIO_ALT_FUNC);
-	MGPIO_voidSetAltFunction(GPIO_PORTA , GPIO_PIN5 , 0b0101);
-	MGPIO_voidSetPinMode(GPIO_PORTA , GPIO_PIN6 , GPIO_ALT_FUNC);
-	MGPIO_voidSetAltFunction(GPIO_PORTA , GPIO_PIN6 , 0b0101);
-	MGPIO_voidSetPinMode(GPIO_PORTA , GPIO_PIN7 , GPIO_ALT_FUNC);
-	MGPIO_voidSetAltFunction(GPIO_PORTA , GPIO_PIN7 , 0b0101);
-	MSTK_voidInit();
-	MSTK_voidDisableInterrupt();
-	MSPI_voidInit();
+
+	MGPIO_voidSetPinMode(GPIO_PORTB , GPIO_PIN13 , GPIO_ALT_FUNC);
+	MGPIO_voidSetAltFunction(GPIO_PORTB , GPIO_PIN13 , 0b0101);
+	MGPIO_voidSetPinMode(GPIO_PORTB , GPIO_PIN14 , GPIO_ALT_FUNC);
+	MGPIO_voidSetAltFunction(GPIO_PORTB , GPIO_PIN14 , 0b0101);
+	MGPIO_voidSetPinMode(GPIO_PORTB , GPIO_PIN15 , GPIO_ALT_FUNC);
+	MGPIO_voidSetAltFunction(GPIO_PORTB , GPIO_PIN15 , 0b0101);
+
 	HTFT_voidReset();
+
 	HTFT_voidSendCommand(SLEEP_OUT);
 	MSTK_voidDelayms(150);
 	HTFT_voidSendCommand(MODE_SET_COLOR);
@@ -79,37 +87,6 @@ void HTFT_voidInit (void)
 	MSTK_voidDelayms(1);
 
 
-	/***************************************************************/
-	//	/*Reset sequence*/
-	//	MGPIO_voidSetResetPin(TFT_RESET_PORT , TFT_RESET_PIN , GPIO_SET);
-	//	MSTK_voidDelayms(100);
-	//
-	//	MGPIO_voidSetResetPin(TFT_RESET_PORT , TFT_RESET_PIN , GPIO_RESET);
-	//	MSTK_voidDelayms(1);
-	//
-	//	MGPIO_voidSetResetPin(TFT_RESET_PORT , TFT_RESET_PIN , GPIO_SET);
-	//	MSTK_voidDelayms(100);
-	//
-	//	MGPIO_voidSetResetPin(TFT_RESET_PORT , TFT_RESET_PIN , GPIO_RESET);
-	//	MSTK_voidDelayms(100);
-	//
-	//	MGPIO_voidSetResetPin(TFT_RESET_PORT , TFT_RESET_PIN , GPIO_SET);
-	//	MSTK_voidDelayms(120);
-	//
-	//
-	//	/*Send command sleep out*/
-	//	HTFT_voidSendCommand(0x11);
-	//
-	//	/*wait 150 msec*/
-	//	MSTK_voidDelayms(150);
-	//
-	//	/*color mode command*/
-	//	HTFT_voidSendCommand(0x3A);
-	//	/*RGB565*/
-	//	HTFT_voidSendData(0x05);
-	//
-	//	/*Display command*/
-	//	HTFT_voidSendCommand(0x29);
 }
 
 void HTFT_voidSendPicture (const u16 *p_Picture)
@@ -135,6 +112,8 @@ void HTFT_voidSendPicture (const u16 *p_Picture)
 		HTFT_voidSendData((u8)(p_Picture[local_u16Iterator]>>HIGH_BITS));
 		HTFT_voidSendData((u8)p_Picture[local_u16Iterator]);
 
+
+/*
 		if(local_u16Iterator==20400)
 		{
 			MGPIO_voidSetPinValue(GPIO_PORTB,GPIO_PIN0,GPIO_PIN_HIGH);
@@ -145,56 +124,22 @@ void HTFT_voidSendPicture (const u16 *p_Picture)
 			MSTK_voidDelayms(1000);
 		}
 		MGPIO_voidSetPinValue(GPIO_PORTB,GPIO_PIN0,GPIO_PIN_LOW);
+		*/
+
 	}
-	/***************************************************************************************/
-	//	u16 counter = 0;
-	//	u8 data;
-	//
-	//	/*Set x*/
-	//	HTFT_voidSendCommand(0x2A);
-	//
-	//	/*start*/
-	//	HTFT_voidSendData(0);
-	//	HTFT_voidSendData(0);
-	//
-	//	/*stop*/
-	//	HTFT_voidSendData(0);
-	//	HTFT_voidSendData(127);
-	//
-	//
-	//	/*Set y*/
-	//	HTFT_voidSendCommand(0x2B);
-	//
-	//	/*start*/
-	//	HTFT_voidSendData(0);
-	//	HTFT_voidSendData(0);
-	//
-	//	/*stop*/
-	//	HTFT_voidSendData(0);
-	//	HTFT_voidSendData(159);
-	//
-	//	/*Display command*/
-	//	HTFT_voidSendCommand(0x2c);
-	//
-	//	for(counter =0;counter <20480 ;counter++)
-	//	{
-	//		data = p_Picture[counter] >> 8;
-	//		/*Write data for high byte*/
-	//		HTFT_voidSendData(data);
-	//
-	//		data = p_Picture[counter] & 0x00FF;
-	//		/*Write data for low byte*/
-	//		HTFT_voidSendData(data);
-	//	}
 }
 
 static void HTFT_voidSendCommand (u8 A_u8Command)
 {
+	MGPIO_voidSetResetPin(TFT_CS_PORT , TFT_CS_PIN , GPIO_RESET);
 	MGPIO_voidSetResetPin(TFT_CONTROL_PORT , TFT_CONTROL_PIN , GPIO_RESET);
 	MSPI_voidSendReceiveData(A_u8Command);
+	MGPIO_voidSetResetPin(TFT_CS_PORT , TFT_CS_PIN , GPIO_SET);
 }
 static void HTFT_voidSendData (u8 A_u8Data)
 {
+	MGPIO_voidSetResetPin(TFT_CS_PORT , TFT_CS_PIN , GPIO_RESET);
 	MGPIO_voidSetResetPin(TFT_CONTROL_PORT , TFT_CONTROL_PIN , GPIO_SET);
 	MSPI_voidSendReceiveData(A_u8Data);
+	MGPIO_voidSetResetPin(TFT_CS_PORT , TFT_CS_PIN , GPIO_SET);
 }
