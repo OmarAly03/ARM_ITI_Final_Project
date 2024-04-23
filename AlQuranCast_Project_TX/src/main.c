@@ -15,6 +15,7 @@
 #include <HAL/LCD/HLCD_Interface.h>
 #include <HAL/LEDMATRIX/HLEDMATRIX_Interface.h>
 #include <HAL/TFT/HTFT_Interface.h>
+#include "HAL/TFT/TFT_arrays.h"
 
 void Handler0(void);
 void Handler1(void);
@@ -36,6 +37,7 @@ int main(void){
 	MRCC_voidEnablePeripheral(RCC_AHB1,RCC_AHB1_GPIOC);
 	MRCC_voidEnablePeripheral(RCC_APB2 , RCC_APB2_SYSCFG);
 	MRCC_voidEnablePeripheral(RCC_APB2,RCC_APB2_USART1);
+	MRCC_voidEnablePeripheral(RCC_APB1,RCC_APB1_SPI2);
 
 	// Channel Buttons Configuration
 	MGPIO_voidSetPinMode(GPIO_PORTB , GPIO_PIN0 , GPIO_INPUT);
@@ -44,8 +46,10 @@ int main(void){
 	MGPIO_voidSetPinInputMode(GPIO_PORTB , GPIO_PIN1 , GPIO_PULLUP);
 	MGPIO_voidSetPinMode(GPIO_PORTB , GPIO_PIN2 , GPIO_INPUT);
 	MGPIO_voidSetPinInputMode(GPIO_PORTB , GPIO_PIN2 , GPIO_PULLUP);
+	// UART Configuration
 	MGPIO_voidSetPinMode(GPIO_PORTA,GPIO_PIN9,GPIO_ALT_FUNC);
 	MGPIO_voidSetPinMode(GPIO_PORTA,GPIO_PIN10,GPIO_ALT_FUNC);
+
 
 	/*Setup the pins of the alternative functions*/
 	MGPIO_voidSetAltFunction(GPIO_PORTA,GPIO_PIN9,0b0111);
@@ -86,6 +90,9 @@ int main(void){
 	LCD_voidSetPosition(LCD_ROW1,LCD_COLUMN2);
 	LCD_voidSendString((const u8*)"(1) (2) (3)");
 
+	HTFT_voidInit();
+
+
 	while(1)
 	{
 		switch(u8_channelNumber){
@@ -100,10 +107,14 @@ int main(void){
 			LCD_voidSendString((const u8*)"1.Mohamed Seddik");
 			LCD_voidSetPosition(LCD_ROW1,LCD_COLUMN2);
 			LCD_voidSendString((const u8*)"El-Menshawy");
+			//MSTK_voidDelayms(2000);
+			HTFT_voidSendPicture(TFT_ElMenshawy);
+
 			MSTK_voidDelayms(2000);
 			MUSART_voidTransmit(MUSART_USART1,(u8*)'0',1);
 			u8_channelNumber = 0;
 
+			HTFT_voidReset();
 			LCD_voidClearScreen();
 			LCD_voidSetPosition(LCD_ROW0,LCD_COLUMN0);
 			LCD_voidSendString((const u8*)"Choose a Channel:");
@@ -119,10 +130,14 @@ int main(void){
 			LCD_voidSendString((const u8*)"2.Mahmoud Khalil");
 			LCD_voidSetPosition(LCD_ROW1,LCD_COLUMN2);
 			LCD_voidSendString((const u8*)"El-Hussary");
+
+			HTFT_voidSendPicture(TFT_ElHussary);
+
 			MSTK_voidDelayms(2000);
 			MUSART_voidTransmit(MUSART_USART1,(u8*)'0',1);
 			u8_channelNumber = 0;
 
+			HTFT_voidReset();
 			LCD_voidClearScreen();
 			LCD_voidSetPosition(LCD_ROW0,LCD_COLUMN0);
 			LCD_voidSendString((const u8*)"Choose a Channel:");
@@ -138,10 +153,14 @@ int main(void){
 			LCD_voidSendString((const u8*)"3.AbdelBaset");
 			LCD_voidSetPosition(LCD_ROW1,LCD_COLUMN2);
 			LCD_voidSendString((const u8*)"AbdelSamad");
+
+			HTFT_voidSendPicture(TFT_AbdElBasset);
+
 			MSTK_voidDelayms(2000);
 			MUSART_voidTransmit(MUSART_USART1,(u8*)'0',1);
 			u8_channelNumber = 0;
 
+			HTFT_voidReset();
 			LCD_voidClearScreen();
 			LCD_voidSetPosition(LCD_ROW0,LCD_COLUMN0);
 			LCD_voidSendString((const u8*)"Choose a Channel:");
@@ -181,3 +200,4 @@ void EXTI2_IRQHandler(void){
 void handler_USART(void){
 	MUSART_voidReceive(MUSART_USART1 ,&Global_u8RX);
 }
+
