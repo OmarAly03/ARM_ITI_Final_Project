@@ -18,7 +18,11 @@
 /******************* HAL **********************/
 #include <HAL/LCD/HLCD_Interface.h>
 #include <HAL/TFT/HTFT_Interface.h>
+<<<<<<< HEAD:Code/AlQuranCast_Project_TX_Final/src/main.c
 #include <HAL/TFT/TFT_arrays.h>
+=======
+#include "HAL/TFT/TFT_arrays.h"
+>>>>>>> 207dc3583d5fab31f1f2dae0123f204331335697:AlQuranCast_Project_TX/src/main.c
 
 
 void handler_USART(void);
@@ -48,8 +52,11 @@ int main(void){
 	MGPIO_voidSetPinInputMode(GPIO_PORTB , GPIO_PIN1 , GPIO_PULLUP);
 	MGPIO_voidSetPinMode(GPIO_PORTB , GPIO_PIN2 , GPIO_INPUT);
 	MGPIO_voidSetPinInputMode(GPIO_PORTB , GPIO_PIN2 , GPIO_PULLUP);
+<<<<<<< HEAD:Code/AlQuranCast_Project_TX_Final/src/main.c
 	MGPIO_voidSetPinMode(GPIO_PORTB , GPIO_PIN3 , GPIO_INPUT);
 	MGPIO_voidSetPinInputMode(GPIO_PORTB , GPIO_PIN3 , GPIO_PULLUP);
+=======
+>>>>>>> 207dc3583d5fab31f1f2dae0123f204331335697:AlQuranCast_Project_TX/src/main.c
 	// UART Configuration
 	MGPIO_voidSetPinMode(GPIO_PORTA,GPIO_PIN9,GPIO_ALT_FUNC);
 	MGPIO_voidSetPinMode(GPIO_PORTA,GPIO_PIN10,GPIO_ALT_FUNC);
@@ -97,8 +104,25 @@ int main(void){
 			LCD_voidSendString((const u8*)"1.Mohamed Seddik");
 			LCD_voidSetPosition(LCD_ROW1,LCD_COLUMN2);
 			LCD_voidSendString((const u8*)"El-Menshawy");
+<<<<<<< HEAD:Code/AlQuranCast_Project_TX_Final/src/main.c
 
 			HTFT_voidSendPicture(TFT_ElMenshawy);
+=======
+			//MSTK_voidDelayms(2000);
+			HTFT_voidSendPicture(TFT_ElMenshawy);
+
+			MSTK_voidDelayms(2000);
+			MUSART_voidTransmit(MUSART_USART1,(u8*)'0',1);
+			u8_channelNumber = 0;
+
+			HTFT_voidReset();
+			LCD_voidClearScreen();
+			LCD_voidSetPosition(LCD_ROW0,LCD_COLUMN0);
+			LCD_voidSendString((const u8*)"Choose a Channel:");
+			LCD_voidSetPosition(LCD_ROW1,LCD_COLUMN2);
+			LCD_voidSendString((const u8*)"(1) (2) (3)");
+			break;
+>>>>>>> 207dc3583d5fab31f1f2dae0123f204331335697:AlQuranCast_Project_TX/src/main.c
 		}
 
 
@@ -112,8 +136,25 @@ int main(void){
 			LCD_voidSendString((const u8*)"2.Mahmoud Khalil");
 			LCD_voidSetPosition(LCD_ROW1,LCD_COLUMN2);
 			LCD_voidSendString((const u8*)"El-Hussary");
+<<<<<<< HEAD:Code/AlQuranCast_Project_TX_Final/src/main.c
 
 			HTFT_voidSendPicture(TFT_ElHussary);
+=======
+
+			HTFT_voidSendPicture(TFT_ElHussary);
+
+			MSTK_voidDelayms(2000);
+			MUSART_voidTransmit(MUSART_USART1,(u8*)'0',1);
+			u8_channelNumber = 0;
+
+			HTFT_voidReset();
+			LCD_voidClearScreen();
+			LCD_voidSetPosition(LCD_ROW0,LCD_COLUMN0);
+			LCD_voidSendString((const u8*)"Choose a Channel:");
+			LCD_voidSetPosition(LCD_ROW1,LCD_COLUMN2);
+			LCD_voidSendString((const u8*)"(1) (2) (3)");
+			break;
+>>>>>>> 207dc3583d5fab31f1f2dae0123f204331335697:AlQuranCast_Project_TX/src/main.c
 		}
 
 		MGPIO_voidGetPinValue(GPIO_PORTB, GPIO_PIN2, &u8_Button3State);
@@ -126,6 +167,7 @@ int main(void){
 			LCD_voidSendString((const u8*)"3.AbdelBaset");
 			LCD_voidSetPosition(LCD_ROW1,LCD_COLUMN2);
 			LCD_voidSendString((const u8*)"AbdelSamad");
+<<<<<<< HEAD:Code/AlQuranCast_Project_TX_Final/src/main.c
 
 			HTFT_voidSendPicture(TFT_AbdElBasset);
 		}
@@ -135,6 +177,16 @@ int main(void){
 			MUSART_voidTransmit(MUSART_USART1,(u8*)"b",1);
 			MUSART_voidTransmit(MUSART_USART1,(u8*)"d",1);
 			MUSART_voidTransmit(MUSART_USART1,(u8*)"f",1);
+=======
+
+			HTFT_voidSendPicture(TFT_AbdElBasset);
+
+			MSTK_voidDelayms(2000);
+			MUSART_voidTransmit(MUSART_USART1,(u8*)'0',1);
+			u8_channelNumber = 0;
+
+			HTFT_voidReset();
+>>>>>>> 207dc3583d5fab31f1f2dae0123f204331335697:AlQuranCast_Project_TX/src/main.c
 			LCD_voidClearScreen();
 			LCD_voidSetPosition(LCD_ROW0,LCD_COLUMN0);
 			LCD_voidSendString((const u8*)"Choose a Channel:");

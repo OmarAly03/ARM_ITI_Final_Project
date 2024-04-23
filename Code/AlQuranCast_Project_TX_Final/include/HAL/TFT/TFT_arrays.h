@@ -1,6 +1,15 @@
+<<<<<<< HEAD:Code/AlQuranCast_Project_TX_Final/include/HAL/TFT/TFT_arrays.h
 /********************************************/
 /*     Authors: Omar, Mariam & Anwar		*/
 /********************************************/
+=======
+/*
+ * TFT_Monir.h
+ *
+ *  Created on: Oct 7, 2023
+ *      Author: Ibrahim Refaey
+ */
+>>>>>>> 207dc3583d5fab31f1f2dae0123f204331335697:AlQuranCast_Project_TX/include/HAL/TFT/TFT_arrays.h
 
 #ifndef TFT_MONIR_H_
 #define TFT_MONIR_H_
