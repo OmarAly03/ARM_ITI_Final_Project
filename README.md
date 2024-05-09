@@ -20,4 +20,5 @@ Leveraging USART, we established communication between two microcontrollers. The
 
 ## Video Demo
 
+https://github.com/OmarAly03/ARM_ITI_Final_Project/assets/150297015/5c4cb059-bff3-454b-8e3f-9381b932bafd
 
